@@ -1,0 +1,3 @@
+remove locker.apk from the phone/emulator by 
+statically analyzing the code and providing the necessary inputs
+Do not modify the application dalvik code
