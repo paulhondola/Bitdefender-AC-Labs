@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\paulh\\Bitdefender-AC-Labs\\labs\\lab5\\assembly_test_1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{77E8B5E9-DF80-4CE7-838A-8DBC762CE0A1}|assembly_test_1.vcxproj|C:\\Users\\paulh\\Bitdefender-AC-Labs\\labs\\lab5\\assembly_test_1\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{77E8B5E9-DF80-4CE7-838A-8DBC762CE0A1}|assembly_test_1.vcxproj|solutionrelative:main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.c",
+              "DocumentMoniker": "C:\\Users\\paulh\\Bitdefender-AC-Labs\\labs\\lab5\\assembly_test_1\\main.c",
+              "RelativeDocumentMoniker": "main.c",
+              "ToolTip": "C:\\Users\\paulh\\Bitdefender-AC-Labs\\labs\\lab5\\assembly_test_1\\main.c",
+              "RelativeToolTip": "main.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-05-22T09:35:49.58Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
