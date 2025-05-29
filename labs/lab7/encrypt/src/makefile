@@ -14,7 +14,6 @@ jpg:
 	gcc-15 decrypt_jpg.c -o decrypt_jpg
 	./decrypt_jpg ../test_encrypt/Drawing1.jpg ../decrypted/Drawing1.jpg
 
-
 txt:
-	gcc-15 decrypt_txt.c -o decrypt_txt
-	./decrypt_txt ../test_encrypt/1.txt ../decrypted/1.txt
+	gcc-15 -Wall -o txt_decrypt txt_decrypt.c
+	./txt_decrypt

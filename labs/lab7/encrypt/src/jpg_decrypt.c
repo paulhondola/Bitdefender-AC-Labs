@@ -59,7 +59,7 @@ void decrypt_jpg(const char *input_file, const char *output_file) {
   free(enc);
   free(dec);
 
-  printf("✅ Decryption complete: %s\n", output_file);
+  printf("Decryption complete.\n");
 }
 
 int main(int argc, char *argv[]) {
