@@ -11,8 +11,8 @@ pdf:
 	./pdf_decrypt
 
 jpg:
-	gcc-15 decrypt_jpg.c -o decrypt_jpg
-	./decrypt_jpg ../test_encrypt/Drawing1.jpg ../decrypted/Drawing1.jpg
+	gcc-15 -Wall -o jpg_decrypt jpg_decrypt.c
+	./jpg_decrypt
 
 txt:
 	gcc-15 -Wall -o txt_decrypt txt_decrypt.c

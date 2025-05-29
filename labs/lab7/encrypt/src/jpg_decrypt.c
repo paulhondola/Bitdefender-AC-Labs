@@ -1,73 +1,106 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-// Get nibble index from ASCII 'A' to 'P'
-int find_index(unsigned char c) {
-  if (c < 0x41 || c > 0x50)
-    return -1; // not in range 'A'–'P'
-  return c - 0x41;
+// Substitution table from byte_403294 in the binary
+// AkjsSHwiE27.[$+#
+static const uint8_t table[16] = {
+    0x41, // 'A'
+    0x6B, // 'k'
+    0x6A, // 'j'
+    0x73, // 's'
+    0x53, // 'S'
+    0x48, // 'H'
+    0x77, // 'w'
+    0x69, // 'i'
+    0x45, // 'E'
+    0x32, // '2'
+    0x37, // '7'
+    0x2E, // '.'
+    0x5B, // '['
+    0x24, // '$'
+    0x2B, // '+'
+    0x23  // '#'
+};
+
+// Find the index of c in table[]
+static int reverse_lookup(uint8_t c) {
+  for (int i = 0; i < 16; i++)
+    if (table[i] == c)
+      return i;
+  return -1;
 }
 
-void decrypt_jpg(const char *input_file, const char *output_file) {
-  FILE *in = fopen(input_file, "rb");
-  if (!in) {
-    perror("Error opening input file");
+void decrypt_jpg(const char *in_path, const char *out_path) {
+
+  // open file in binary mode
+  FILE *fin = fopen(in_path, "rb");
+  if (!fin) {
+    perror("fopen input");
     exit(1);
   }
 
-  fseek(in, 0, SEEK_END);
-  long enc_size = ftell(in);
-  rewind(in);
+  // determine file size
+  fseek(fin, 0, SEEK_END);
+  long size = ftell(fin);
+  fseek(fin, 0, SEEK_SET);
 
-  if (enc_size % 2 != 0) {
-    fprintf(stderr, "Encrypted JPG size is not even.\n");
-    fclose(in);
+  // incorrect size check
+  if (size % 2 != 0) {
+    fprintf(stderr, "Error: encrypted size must be even\n");
     exit(1);
   }
 
-  unsigned char *enc = malloc(enc_size);
-  fread(enc, 1, enc_size, in);
-  fclose(in);
+  // allocate memory for encrypted and decrypted data
+  uint8_t *enc = malloc(size);
+  uint8_t *dec = malloc(size / 2);
+  if (!enc || !dec) {
+    perror("malloc");
+    exit(1);
+  }
 
-  unsigned char *dec = malloc(enc_size / 2);
+  // read the encrypted file
+  if (fread(enc, 1, size, fin) != size) {
+    perror("fread");
+    exit(1);
+  }
+  fclose(fin);
 
-  for (long i = 0; i < enc_size; i += 2) {
-    int hi = find_index(enc[i]);
-    int lo = find_index(enc[i + 1]);
-    if (hi == -1 || lo == -1) {
-      fprintf(stderr, "Invalid byte in encrypted JPG at %ld: %02X %02X\n", i,
-              enc[i], enc[i + 1]);
-      free(enc);
-      free(dec);
+  // decrypt the data
+  for (long i = 0; i < size; i += 2) {
+    // set the high and low nibbles
+    int hi = reverse_lookup(enc[i]);
+    int lo = reverse_lookup(enc[i + 1]);
+
+    // if either nibble is not found, print an error and exit
+    if (hi < 0 || lo < 0) {
+      fprintf(stderr, "Unknown byte pair at offset %ld: %02X %02X\n", i, enc[i],
+              enc[i + 1]);
       exit(1);
     }
 
-    dec[i / 2] = (hi << 4) | lo;
+    // combine the nibbles into a byte
+    dec[i / 2] = (uint8_t)((hi << 4) | lo);
   }
 
-  FILE *out = fopen(output_file, "wb");
-  if (!out) {
-    perror("Error opening output file");
-    free(enc);
-    free(dec);
+  // write the decrypted data to the output file
+  FILE *fout = fopen(out_path, "wb");
+  if (!fout) {
+    perror("fopen output");
     exit(1);
   }
 
-  fwrite(dec, 1, enc_size / 2, out);
-  fclose(out);
+  fwrite(dec, 1, size / 2, fout);
+  fclose(fout);
 
   free(enc);
   free(dec);
-
   printf("Decryption complete.\n");
 }
 
-int main(int argc, char *argv[]) {
-  if (argc != 3) {
-    fprintf(stderr, "Usage: %s <encrypted.jpg> <decrypted.jpg>\n", argv[0]);
-    return 1;
-  }
-
-  decrypt_jpg(argv[1], argv[2]);
+int main(int argc, char **argv) {
+  char *input_file = "../encrypted/Drawing1.jpg";
+  char *output_file = "../decrypted/Drawing1.jpg";
+  decrypt_jpg(input_file, output_file);
   return 0;
 }
