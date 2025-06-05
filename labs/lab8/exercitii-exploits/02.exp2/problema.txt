@@ -1,0 +1,3 @@
+Programul trebuie facut sa afiseze un MessageBox cu textul: "Ana are 121 de mere."
+Exe-ul nu se va modifica in nici-un fel, totul trebuie facut prin intermediul fisierului input.txt.
+Programul nu trebuie sa crape.

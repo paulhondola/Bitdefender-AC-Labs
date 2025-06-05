@@ -1,0 +1,5 @@
+1. Programul trebuie facut sa afiseze un MessageBox. 
+2. MessageBox-ul trebuie sa afiseze exact textul din input.txt (fara caractere extra).
+
+Exe-ul nu se modifica in nici-un fel, totul trebuie facut prin intermediul fisierului input.txt.
+Programul nu trebuie sa crape.

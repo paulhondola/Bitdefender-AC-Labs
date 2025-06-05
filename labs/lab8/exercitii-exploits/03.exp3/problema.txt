@@ -1,0 +1,2 @@
+Programul trebuie facut sa afiseze un MessageBox.
+Exe-ul nu se modifica in nici-un fel, totul trebuie facut prin intermediul fisierului input.txt.
